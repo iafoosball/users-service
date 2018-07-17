@@ -27,4 +27,4 @@ WORKDIR /root/
 
 # Copy our static executable
 COPY --from=builder /go/src/github.com/iafoosball/users-service/cmd/iafoosball-server/users-service .
-CMD ["./users-service"]
+CMD ["./users-service","--port","4444","--host","0.0.0.0"]

@@ -3,6 +3,10 @@ services:
   users-service:
     container_name: 'users-service'
     build: './'
+    ports:
+      - 4444:4444
+    links:
+      - "arangodb:database"
     volumes:
       - './api:$HOME/go/src/github.com/iafoosball/users-service'
 #      /cmd/iafoosball-server
