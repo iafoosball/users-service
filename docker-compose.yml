@@ -5,11 +5,11 @@ services:
     build: './'
     ports:
       - 4444:4444
-    links:
-      - "arangodb:database"
     volumes:
       - './api:$HOME/go/src/github.com/iafoosball/users-service'
-#      /cmd/iafoosball-server
+    links:
+      - "arangodb"
+#      - "arangodb:database"
     depends_on:
       - 'arangodb'
   arangodb:
@@ -21,6 +21,3 @@ services:
       - ARANGO_ROOT_PASSWORD=joe
     volumes:
       - /tmp/arangodb:/var/lib/arangodb3
-#      - ./initArango:/usr/local/bin/initArango
-    # command:
-    #   bash -c "/usr/local/bin/initArango"
