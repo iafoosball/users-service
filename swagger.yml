@@ -88,19 +88,6 @@ paths:
       responses:
         200:
           description: "successful operation, user updated"
-#  /goals:
-#    post:
-#      summary: Create a new goal.
-#      parameters:
-#      - in: "body"
-#        name: "body"
-#        description: The goal information.
-#        required: true
-#        schema:
-#          $ref: "#/definitions/Goal"
-#      responses:
-#        200:
-#          description: "Successful created goal"
   /friends/{user_id}:
     get:
       summary: Get all friends for a user.
@@ -219,24 +206,6 @@ definitions:
       level:
         type: string
         description: The level of the user.
-  Goal:
-    type: object
-    required:
-      - match_id
-    properties:
-      user_id:
-        type: string
-        description: The unique user id given by the system.
-      match_id:
-        type: string
-        description: The unique match id.
-      side:
-        type: string
-        description: The side who scored the goal. Usually either red or blue.
-      datetime:
-        type: string
-        description: The datetime in nanoseconds of the goal.
-        example: "1257856852039812612"
   Friend:
     type: object
     properties:

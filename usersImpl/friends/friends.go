@@ -2,15 +2,15 @@ package friends
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/iafoosball/users-service/iaf"
+	"github.com/iafoosball/users-service/usersImpl"
 	"time"
 	"github.com/iafoosball/users-service/restapi/operations"
 	"github.com/iafoosball/users-service/models"
 	"fmt"
 )
 
-var db = iaf.DB()
-var colFriends = iaf.EdgeCol("friends")
+var db = usersImpl.DB()
+var colFriends = usersImpl.EdgeCol("friends")
 
 func MakeFriendRequest() func(params operations.PostFriendsUserIDFriendIDParams) middleware.Responder {
 	return func(params operations.PostFriendsUserIDFriendIDParams) middleware.Responder {

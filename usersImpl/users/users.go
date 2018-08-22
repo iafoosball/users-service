@@ -2,13 +2,13 @@ package users
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/iafoosball/users-service/iaf"
+	"github.com/iafoosball/users-service/usersImpl"
 	"github.com/iafoosball/users-service/restapi/operations"
 	"github.com/iafoosball/users-service/models"
 )
 
-var dbUsers = iaf.DB()
-var colUsers = iaf.Col("users")
+var dbUsers = usersImpl.DB()
+var colUsers = usersImpl.Col("users")
 
 func GetUserByID() func(params operations.GetUsersUserIDParams) middleware.Responder {
 	return func(params operations.GetUsersUserIDParams) middleware.Responder {

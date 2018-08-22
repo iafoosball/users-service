@@ -11,8 +11,8 @@ import (
 	"github.com/tylerb/graceful"
 
 	"github.com/iafoosball/users-service/restapi/operations"
-	"github.com/iafoosball/users-service/iaf/users"
-	"github.com/iafoosball/users-service/iaf/friends"
+	"github.com/iafoosball/users-service/usersImpl/users"
+	"github.com/iafoosball/users-service/usersImpl/friends"
 
 )
 
@@ -40,13 +40,17 @@ func configureAPI(api *operations.IafoosballAPI) http.Handler {
 
 	//api.TxtProducer = runtime.TextProducer()
 
+	//[Start: Users end points]
 	api.PostUsersHandler = operations.PostUsersHandlerFunc(users.CreateUser())
 	api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(users.GetUserByID())
+	//[End: Users end points]
 
+	//[Start: Friends end points}
 	api.GetFriendsUserIDHandler = operations.GetFriendsUserIDHandlerFunc(friends.GetFriends())
 	api.PostFriendsUserIDFriendIDHandler = operations.PostFriendsUserIDFriendIDHandlerFunc(friends.MakeFriendRequest())
 	api.PatchFriendsUserIDFriendIDHandler = operations.PatchFriendsUserIDFriendIDHandlerFunc(friends.AcceptFriendRequest())
 	api.DeleteFriendsFriendshipIDHandler = operations.DeleteFriendsFriendshipIDHandlerFunc(friends.DeleteFriend())
+	//[End: Friends end points}
 
 	//){
 	//api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(func(params operations.GetUsersUserIDParams) middleware.Responder {

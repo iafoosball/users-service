@@ -17,8 +17,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w" -a -installsuffix cgo -o 
 #iafoosball/users-service/cmd/iafoosball-server
 
 # STEP 2 build a small image
-# start from scratch
-#FROM scratch
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
