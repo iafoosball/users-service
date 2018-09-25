@@ -1,16 +1,12 @@
-package friends
+package usersImpl
 
 import (
-	"github.com/go-openapi/runtime/middleware"
-	"github.com/iafoosball/users-service/usersImpl"
-	"time"
-	"github.com/iafoosball/users-service/restapi/operations"
-	"github.com/iafoosball/users-service/models"
 	"fmt"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/iafoosball/users-service/models"
+	"github.com/iafoosball/users-service/restapi/operations"
+	"time"
 )
-
-var db = usersImpl.DB()
-var colFriends = usersImpl.EdgeCol("friends")
 
 func MakeFriendRequest() func(params operations.PostFriendsUserIDFriendIDParams) middleware.Responder {
 	return func(params operations.PostFriendsUserIDFriendIDParams) middleware.Responder {
@@ -18,7 +14,7 @@ func MakeFriendRequest() func(params operations.PostFriendsUserIDFriendIDParams)
 		friend.Accepted = false
 		friend.DatetimeRequest = time.Now().Format(time.RFC3339)
 		friend.Key = params.UserID + params.FriendID
-		if _, err := colFriends.CreateDocument(nil, friend); err != nil {
+		if _, err := friendsCol.CreateDocument(nil, friend); err != nil {
 			panic(err)
 		}
 		return operations.NewPostFriendsUserIDFriendIDOK()
@@ -29,7 +25,7 @@ func AcceptFriendRequest() func(params operations.PatchFriendsUserIDFriendIDPara
 	return func(params operations.PatchFriendsUserIDFriendIDParams) middleware.Responder {
 		query := "Update {_key: \"" + params.UserID + params.FriendID + "\"} WITH { accepted: true, datetime_accepted: \"" +
 			time.Now().Format(time.RFC3339) + "\" } IN friends "
-		if _, err := db.Query(nil, query, nil); err != nil {
+		if _, err := database.Query(nil, query, nil); err != nil {
 			panic(err)
 		}
 		return operations.NewPatchFriendsUserIDFriendIDOK()
@@ -38,7 +34,7 @@ func AcceptFriendRequest() func(params operations.PatchFriendsUserIDFriendIDPara
 
 func DeleteFriend() func(params operations.DeleteFriendsFriendshipIDParams) middleware.Responder {
 	return func(params operations.DeleteFriendsFriendshipIDParams) middleware.Responder {
-		if _, err := colFriends.RemoveDocument(nil, params.FriendshipID); err != nil {
+		if _, err := friendsCol.RemoveDocument(nil, params.FriendshipID); err != nil {
 			panic(err)
 		}
 		return operations.NewDeleteFriendsFriendshipIDOK()
@@ -53,7 +49,7 @@ func GetFriends() func(params operations.GetFriendsUserIDParams) middleware.Resp
 	return func(params operations.GetFriendsUserIDParams) middleware.Responder {
 		query := "FOR users, edge, edgesArray IN 1 ANY 'users/" + params.UserID + "' GRAPH 'friends' FILTER edgesArray.edges[*].accepted ALL == true Return {users}"
 		var friends []*models.User
-		if cursor, err := db.Query(nil, query, nil); err != nil {
+		if cursor, err := database.Query(nil, query, nil); err != nil {
 			panic(err)
 		} else {
 			for cursor.HasMore() {

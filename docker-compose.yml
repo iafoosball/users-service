@@ -17,9 +17,9 @@ services:
     ports:
       - 9006:8529
     environment:
-      - ARANGO_ROOT_PASSWORD=iafoosball for the win
+      - ARANGO_ROOT_PASSWORD=iafoosball@users for the win
     volumes:
-      - /var/lib/arangodb-persistent:/var/lib/arangodb3
+      - /var/lib/arangodb-users-persistent:/var/lib/arangodb3
 
   swagger-ui:
     container_name: "swagger"
