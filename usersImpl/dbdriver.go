@@ -13,7 +13,7 @@ var db driver.Database
 
 func DB() driver.Database {
 	if db == nil {
-		time.Sleep(3 * time.Second)
+		time.Sleep(2 * time.Second)
 		conn, err := http.NewConnection(http.ConnectionConfig{
 			// Endpoints: []string{"http://http://192.38.56.114:9002"},
 			Endpoints: []string{"http://arangodb:9006"},
