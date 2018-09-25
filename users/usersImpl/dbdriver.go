@@ -82,6 +82,7 @@ func ensureDatabaseName(name string, c driver.Client, db driver.Database) driver
 	} else if err != nil {
 		fmt.Println(err)
 	} else {
+		//	sdfasdf
 
 	}
 
