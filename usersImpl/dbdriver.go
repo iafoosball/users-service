@@ -3,10 +3,10 @@ package usersImpl
 import (
 	"log"
 
+	"fmt"
 	"github.com/arangodb/go-driver"
 	"github.com/arangodb/go-driver/http"
 	"time"
-	"fmt"
 )
 
 var db driver.Database
@@ -16,7 +16,7 @@ func DB() driver.Database {
 		time.Sleep(3 * time.Second)
 		conn, err := http.NewConnection(http.ConnectionConfig{
 			// Endpoints: []string{"http://http://192.38.56.114:9002"},
-			Endpoints: []string{"http://arangodb:8529"},
+			Endpoints: []string{"http://arangodb:9006"},
 		})
 		if err != nil {
 			log.Fatal(err)
