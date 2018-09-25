@@ -24,7 +24,7 @@ func DB() driver.Database {
 		log.Println()
 		c, err := driver.NewClient(driver.ClientConfig{
 			Connection:     conn,
-			Authentication: driver.BasicAuthentication("iaf", "iafoosball users"),
+			Authentication: driver.BasicAuthentication("root", "iafoosball for the win"),
 		})
 		db, err = c.Database(nil, "users")
 		if err != nil {
