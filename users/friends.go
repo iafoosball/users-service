@@ -1,4 +1,4 @@
-package usersImpl
+package users
 
 import (
 	"fmt"

@@ -1,7 +1,6 @@
-package usersImpl
+package users
 
 import (
-	"github.com/arangodb/go-driver"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/iafoosball/users-service/models"
 	"github.com/iafoosball/users-service/restapi/operations"
@@ -16,7 +15,9 @@ func GetUserByID() func(params operations.GetUsersUserIDParams) middleware.Respo
 	}
 }
 
-func CreateUser(u models.User) (*operations.PostUsersOK, driver.DocumentMeta) {
-	meta, _ := usersCol.CreateDocument(nil, &u)
-	return operations.NewPostUsersOK(), meta
+func CreateUser() func(params operations.PostUsersParams) middleware.Responder {
+	return func(params operations.PostUsersParams) middleware.Responder {
+		_, _ = usersCol.CreateDocument(nil, &params.Body)
+		return operations.NewPostUsersOK()
+	}
 }

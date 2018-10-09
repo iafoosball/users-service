@@ -4,14 +4,14 @@ package restapi
 
 import (
 	"crypto/tls"
-	"github.com/iafoosball/users-service/users/usersApi"
-	"github.com/iafoosball/users-service/users/usersImpl"
+	"github.com/iafoosball/users-service/users"
+	"github.com/syllabix/swagserver"
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
-	graceful "github.com/tylerb/graceful"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/tylerb/graceful"
 
 	"github.com/iafoosball/users-service/restapi/operations"
 )
@@ -27,8 +27,8 @@ func configureAPI(api *operations.UsersAPI) http.Handler {
 	api.ServeError = errors.ServeError
 
 	//[Start: Users end points]
-	api.PostUsersHandler = operations.PostUsersHandlerFunc(usersApi.CreateUser())
-	api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(usersImpl.GetUserByID())
+	api.PostUsersHandler = operations.PostUsersHandlerFunc(users.CreateUser())
+	api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(users.GetUserByID())
 	//[End: Users end points]
 
 	//[Start: Friends end points}
@@ -93,5 +93,10 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
-	return handler
+	swagserve := swagserver.New(swagserver.Config{
+		URLPath:        "/swagger",
+		ShouldRender:   true,
+		SwaggerSpecURL: "/home/joe/go/src/github.com/iafoosball/users-service/users.json",
+	})
+	return swagserve(handler)
 }
