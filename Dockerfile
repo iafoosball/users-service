@@ -11,6 +11,7 @@ RUN mkdir -p /go/src/github.com/iafoosball
 WORKDIR /go/src/github.com/iafoosball
 RUN git clone https://github.com/iafoosball/users-service.git
 WORKDIR /go/src/github.com/iafoosball/users-service
+RUN ls
 
 #Download and install swagger in go and run codegen
 RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
