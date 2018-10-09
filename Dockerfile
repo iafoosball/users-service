@@ -20,7 +20,7 @@ RUN dep ensure -vendor-only
 
 #Install the service
 WORKDIR /go/src/github.com/iafoosball/users-service/cmd/users-server/
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags " -w" -a -installsuffix cgo -o users-service .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-w" -a -installsuffix cgo -o users-service .
 
 
 # STEP 2 build a small image
