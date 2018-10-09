@@ -1,4 +1,4 @@
-package usersImpl
+package users
 
 import (
 	"github.com/IAFoosball/public-server/iaf/users"
