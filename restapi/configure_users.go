@@ -5,6 +5,7 @@ package restapi
 import (
 	"crypto/tls"
 	"github.com/iafoosball/users-service/users"
+	"github.com/tylerb/graceful"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -84,7 +85,7 @@ func configureTLS(tlsConfig *tls.Config) {
 // If you need to modify a config, store server instance to stop it individually later, this is the place.
 // This function can be called multiple times, depending on the number of serving schemes.
 // scheme value will be set accordingly: "http", "https" or "unix"
-func configureServer(s *http.Server, scheme, addr string) {
+func configureServer(s *graceful.Server, scheme, addr string) {
 }
 
 // The middleware configuration is for the handler executors. These do not apply to the swagger.json document.
