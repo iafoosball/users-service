@@ -8,7 +8,7 @@ RUN chmod +x /usr/bin/dep
 
 #Download the service
 RUN mkdir -p /go/src/github.com/iafoosball
-RUN go get -u -d github.com/iafoosball/users-service
+RUN go get -u github.com/iafoosball/users-services/cmd/users-server
 #WORKDIR /go/src/github.com/iafoosball
 #RUN git clone https://github.com/iafoosball/users-service.git
 WORKDIR /go/src/github.com/iafoosball/users-service
