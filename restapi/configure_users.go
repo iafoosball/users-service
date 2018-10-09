@@ -5,13 +5,12 @@ package restapi
 import (
 	"crypto/tls"
 	"github.com/iafoosball/users-service/users"
+	"github.com/tylerb/graceful"
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
-	graceful "github.com/tylerb/graceful"
-
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime/middleware"
 	"github.com/iafoosball/users-service/restapi/operations"
 )
 
