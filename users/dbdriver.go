@@ -19,20 +19,20 @@ var (
 	databaseName         string          = "iaf-users"
 
 	friendsColName string            = "friends"
-	friendsCol     driver.Collection = col(friendsColName)
+	friendsCol     driver.Collection = Col(friendsColName)
 	usersColName   string            = "users"
-	usersCol       driver.Collection = col(usersColName)
+	usersCol       driver.Collection = Col(usersColName)
 
 	friendsCollectionExists bool = false
 	usersCollectionExists   bool = false
 )
 
 func dbDriver() driver.Database {
-	counter := 0
+	c := 0
 	var db driver.Database
-	for db == nil && counter < 10 {
-		counter++
-		// create repeated call library until connection is established with increasing sleep timer
+	// create repeated call library until connection is established with increasing sleep timer
+	for db == nil && c < 10 {
+		c++
 		// can be put in docker-compose with health-check
 		fmt.Println("Connecting to " + url + strconv.Itoa(port))
 		if conn, err := http.NewConnection(http.ConnectionConfig{
@@ -54,83 +54,50 @@ func dbDriver() driver.Database {
 			log.Fatal(err)
 		}
 		if db == nil {
-			fmt.Println("sleep")
-			time.Sleep(2 * time.Second)
+			log.Println("Sleep seconds" + strconv.Itoa(c))
+			time.Sleep(time.Duration(c) * 1000 * time.Millisecond)
 		}
 	}
 	return db
 }
 
 func ensureDatabaseName(name string, c driver.Client, db driver.Database) driver.Database {
-	if exists, err := c.DatabaseExists(nil, databaseUser); exists == false {
-		db, _ = c.CreateDatabase(nil, databaseName, &driver.CreateDatabaseOptions{
+	fmt.Println("Create new database with user iaf-users. If already there skip")
+	if db == nil {
+		if db, err := c.CreateDatabase(nil, databaseName, &driver.CreateDatabaseOptions{
 			[]driver.CreateDatabaseUserOptions{
 				{
 					UserName: databaseUser,
 					Password: databaseUserPassword,
 				},
 			},
-		})
-	} else if err != nil {
-		fmt.Println(err)
-	} else {
-		db, _ = c.Database(nil, databaseName)
+		},
+		); err == nil {
+			fmt.Print("create database")
+			if _, err := db.CreateCollection(nil, friendsColName, &driver.CreateCollectionOptions{
+				Type: driver.CollectionTypeEdge,
+			}); err != nil {
+				fmt.Print("sddfff")
+				fmt.Println(err)
+			}
+			db.CreateCollection(nil, usersColName, &driver.CreateCollectionOptions{
+				Type: driver.CollectionTypeDocument,
+			})
+			fmt.Print("create database")
+		} else {
+			log.Print(err)
+		}
+		db, _ = c.Database(nil, "iaf-users")
+
+		//database.CreateGraph(nil, graphUsers, &driver.CreateGraphOptions{OrphanVertexCollections: {
+		//	[1]string{collectionsUsers},
+		//}
+		//})
 	}
-
-	if exists, err := c.UserExists(nil, databaseUser); exists == false {
-
-	} else if err != nil {
-		fmt.Println(err)
-	} else {
-
-	}
-
-	if exists, err := db.CollectionExists(nil, friendsColName); exists == false {
-		db.CreateCollection(nil, friendsColName, &driver.CreateCollectionOptions{
-			Type: driver.CollectionTypeEdge,
-		})
-	} else if err != nil {
-		fmt.Println(err)
-	} else {
-
-	}
-	if exists, err := db.CollectionExists(nil, usersColName); exists == false {
-		db.CreateCollection(nil, usersColName, &driver.CreateCollectionOptions{})
-	} else if err != nil {
-		fmt.Println(err)
-	} else {
-
-	}
-
-	fmt.Println("Create new database with user iaf-users. If already there skip")
-
-	//err == nil {
-	//fmt.Print("create database")
-	//if _, err := db.CreateCollection(nil, friendsColName, &driver.CreateCollectionOptions{
-	//	Type: driver.CollectionTypeEdge,
-	//}); err != nil {
-	//	fmt.Print("sddfff")
-	//	fmt.Println(err)
-	//}
-	//db.CreateCollection(nil, usersColName, &driver.CreateCollectionOptions{
-	//	Type: driver.CollectionTypeDocument,
-	//})
-	//fmt.Print("create database")
-	//} else {
-	//	fmt.Println("fil")
-	//	log.Print(err)
-	//}
-	//db, _ = c.Database(nil, "iaf-users")
-
-	//database.CreateGraph(nil, graphMatches, &driver.CreateGraphOptions{OrphanVertexCollections: {
-	//	[1]string{collectionsMatches},
-	//}
-	//})
-	//}
 	return db
 }
 
-func col(collection string) driver.Collection {
+func Col(collection string) driver.Collection {
 	log.Println("Open collection: " + collection)
 	if database != nil {
 		col, err := database.Collection(nil, collection)
