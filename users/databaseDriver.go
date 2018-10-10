@@ -38,11 +38,14 @@ func dbDriver() driver.Database {
 		if conn, err := http.NewConnection(http.ConnectionConfig{
 			Endpoints: []string{url + strconv.Itoa(port)},
 		}); err == nil {
+			log.Println("Connected to database")
 			if c, e := driver.NewClient(driver.ClientConfig{
 				Connection:     conn,
 				Authentication: driver.BasicAuthentication("root", "iafoosball@users for the win"),
 			}); e == nil {
+				fmt.Println("authorized as root")
 				if !initDatabase {
+					fmt.Println("init db")
 					db = ensureDatabaseName(databaseName, c, db)
 					initDatabase = true
 				}

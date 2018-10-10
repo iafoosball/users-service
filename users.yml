@@ -1,4 +1,5 @@
 #swagger generate server -f users.yml -A users
+#go run ../../go-swagger/go-swagger/cmd/swagger/swagger.go generate server -f users.yml -A users
 #go run main.go --port=4444
 swagger: "2.0"
 info:
