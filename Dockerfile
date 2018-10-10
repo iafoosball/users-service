@@ -7,9 +7,10 @@ ADD https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd64 /usr/
 RUN chmod +x /usr/bin/dep
 
 #Download the service
-RUN mkdir -p /go/src/github.com/iafoosball
-WORKDIR /go/src/github.com/iafoosball
-RUN git clone https://github.com/iafoosball/users-service.git
+RUN mkdir -p /go/src/github.com/iafoosball/users-service
+WORKDIR /go/src/github.com/iafoosball/users-service
+RUN git clone -b 'v1.0.0' --single-branch https://github.com/iafoosball/users-service.git
+#COPY . /go/src/github.com/iafoosball/users-service     Used as a workaround for copying.
 WORKDIR /go/src/github.com/iafoosball/users-service
 RUN ls
 
