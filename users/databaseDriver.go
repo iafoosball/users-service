@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	"github.com/arangodb/go-driver"
 	"github.com/arangodb/go-driver/http"
 	"log"
@@ -34,15 +33,18 @@ func dbDriver() driver.Database {
 	for db == nil && c < 10 {
 		c++
 		// can be put in docker-compose with health-check
-		fmt.Println("Connecting to " + url + strconv.Itoa(port))
+		log.Println("Connecting to " + url + strconv.Itoa(port))
 		if conn, err := http.NewConnection(http.ConnectionConfig{
 			Endpoints: []string{url + strconv.Itoa(port)},
 		}); err == nil {
+			log.Println("Connected to database")
 			if c, e := driver.NewClient(driver.ClientConfig{
 				Connection:     conn,
 				Authentication: driver.BasicAuthentication("root", "iafoosball@users for the win"),
 			}); e == nil {
+				log.Println("authorized as root")
 				if !initDatabase {
+					log.Println("init db")
 					db = ensureDatabaseName(databaseName, c, db)
 					initDatabase = true
 				}
@@ -62,7 +64,7 @@ func dbDriver() driver.Database {
 }
 
 func ensureDatabaseName(name string, c driver.Client, db driver.Database) driver.Database {
-	fmt.Println("Create new database with user iaf-users. If already there skip")
+	log.Println("Create new database with user iaf-users. If already there skip")
 	if db == nil {
 		if db, err := c.CreateDatabase(nil, databaseName, &driver.CreateDatabaseOptions{
 			[]driver.CreateDatabaseUserOptions{
@@ -73,17 +75,17 @@ func ensureDatabaseName(name string, c driver.Client, db driver.Database) driver
 			},
 		},
 		); err == nil {
-			fmt.Print("create database")
+			log.Print("create database")
 			if _, err := db.CreateCollection(nil, friendsColName, &driver.CreateCollectionOptions{
 				Type: driver.CollectionTypeEdge,
 			}); err != nil {
-				fmt.Print("sddfff")
-				fmt.Println(err)
+				log.Print("sddfff")
+				log.Println(err)
 			}
 			db.CreateCollection(nil, usersColName, &driver.CreateCollectionOptions{
 				Type: driver.CollectionTypeDocument,
 			})
-			fmt.Print("create database")
+			log.Print("create database")
 		} else {
 			log.Print(err)
 		}
