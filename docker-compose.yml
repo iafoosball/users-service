@@ -1,19 +1,19 @@
 version: '2'
 services:
   users:
-    container_name: 'users-service'
+    container_name: users-service
     build: './'
     ports:
       - 9005:9005
-    links:
-      - arangodb
     depends_on:
-      - arangodb
+      - arangodb  
+    links:
+      - arangodb:arangodb
   arangodb:
-    container_name: 'users-arangodb'
+    container_name: users-arangodb
     image: arangodb/arangodb:latest
     ports:
-      - 9006:9006
+      - 9006:8529
     environment:
       - ARANGO_ROOT_PASSWORD=iafoosball@users for the win
     volumes:
