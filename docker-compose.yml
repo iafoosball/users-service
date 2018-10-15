@@ -1,6 +1,6 @@
 version: '2'
 services:
-  users-service:
+  users:
     container_name: 'users-service'
     build: './'
     ports:
@@ -10,7 +10,7 @@ services:
     links:
       - "arangodb"
     depends_on:
-      - 'arangodb'
+      - arangodb
   arangodb:
     container_name: 'users-arangodb'
     image: arangodb/arangodb:3.3.11
@@ -20,9 +20,3 @@ services:
       - ARANGO_ROOT_PASSWORD=iafoosball@users for the win
     volumes:
       - /var/lib/arangodb-users-persistent:/var/lib/arangodb3
-
-  swagger-ui:
-    container_name: "swagger"
-    build: './swagger-ui/'
-    ports:
-      - 9007:8080

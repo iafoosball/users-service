@@ -16,8 +16,8 @@ WORKDIR /go/src/github.com/iafoosball/users-service
 RUN ls
 
 #Download and install swagger in go and run codegen
-RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
-RUN /go/bin/swagger generate server -f /go/src/github.com/iafoosball/users-service/users.yml -A users
+#RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
+#RUN /go/bin/swagger generate server -f /go/src/github.com/iafoosball/users-service/users.yml -A users
 RUN go get -u golang.org/x/net/netutil
 RUN dep ensure -vendor-only
 
@@ -30,11 +30,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w" -a -installsuffix cgo -o 
 # start from scratch
 #FROM scratch
 
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates
-
-WORKDIR /root/
-
-# Copy our static executable
-COPY --from=builder /go/src/github.com/iafoosball/users-service/cmd/users-server/users-service .
+#FROM alpine:latest
+#RUN apk --no-cache add ca-certificates
+#
+#WORKDIR /root/
+#
+## Copy our static executable
+#COPY --from=builder /go/src/github.com/iafoosball/users-service/cmd/users-server/users-service .
 CMD ["./users-service","--port","4444","--host","0.0.0.0"]

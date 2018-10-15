@@ -54,9 +54,9 @@ func configureAPI(api *operations.UsersAPI) http.Handler {
 	api.GetFriendsUserIDHandler = operations.GetFriendsUserIDHandlerFunc(func(params operations.GetFriendsUserIDParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetFriendsUserID has not yet been implemented")
 	})
-	api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(func(params operations.GetUsersUserIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetUsersUserID has not yet been implemented")
-	})
+	//api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(func(params operations.GetUsersUserIDParams) middleware.Responder {
+	//	return middleware.NotImplemented("operation .GetUsersUserID has not yet been implemented")
+	//})
 	api.PatchFriendsUserIDFriendIDHandler = operations.PatchFriendsUserIDFriendIDHandlerFunc(func(params operations.PatchFriendsUserIDFriendIDParams) middleware.Responder {
 		return middleware.NotImplemented("operation .PatchFriendsUserIDFriendID has not yet been implemented")
 	})
