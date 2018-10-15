@@ -4,19 +4,22 @@ services:
     container_name: 'users-service'
     build: './'
     ports:
-      - 9005:4444
-    volumes:
-      - './api:$HOME/go/src/github.com/iafoosball/users-service'
+      - 9005:9005
     links:
-      - "arangodb"
+      - arangodb
     depends_on:
       - arangodb
   arangodb:
     container_name: 'users-arangodb'
-    image: arangodb/arangodb:3.3.11
+    image: arangodb/arangodb:latest
     ports:
-      - 9006:8529
+      - 9006:9006
     environment:
       - ARANGO_ROOT_PASSWORD=iafoosball@users for the win
     volumes:
-      - /var/lib/arangodb-users-persistent:/var/lib/arangodb3
+      - /var/lib/iafoosball/arango/user-data:/var/lib/arangodb3
+
+networks: 
+  default:
+    external:
+      name: kong_iafoosball
