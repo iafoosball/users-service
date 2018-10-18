@@ -3,7 +3,9 @@
 package restapi
 
 import (
+	"log"
 	"crypto/tls"
+	"github.com/go-openapi/swag"
 	"github.com/iafoosball/users-service/users"
 	"net/http"
 
@@ -15,12 +17,25 @@ import (
 
 //go:generate swagger generate server --target .. --name users --spec ../users.yml
 
+// ConfigurationFlags are initialized... when?
+var ConfigurationFlags = struct {
+	DatabaseHost     string `long:"dbhost" description:"The database host url" default:"arangodb" env:"dbhost"`
+	DatabasePort     int    `long:"dbport" description:"The database port" default:"8529" env:"dbport"`
+	DatabaseUser     string `long:"dbuser" description:"The database user" default:"root" env:"dbuser"`
+	DatabasePassword string `long:"dbpassword" description:"The database password for the user" default:"users-password" env:"dbpassword"`
+}{}
+
 func configureFlags(api *operations.UsersAPI) {
-	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
+	api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{
+		swag.CommandLineOptionsGroup{
+			ShortDescription: "Additional configuration parameters",
+			LongDescription:  "Additional configuration parameters, mainly used to configure the arangodb connection.",
+			Options:          &ConfigurationFlags,
+		},
+	}
 }
 
 func configureAPI(api *operations.UsersAPI) http.Handler {
-	// configure the api here
 	api.ServeError = errors.ServeError
 
 	// Set your custom logger if needed. Default one is log.Printf
@@ -29,46 +44,22 @@ func configureAPI(api *operations.UsersAPI) http.Handler {
 	// Example:
 	// api.Logger = log.Printf
 
-	//[Start: Users end points]
-	api.PostUsersHandler = operations.PostUsersHandlerFunc(users.CreateUser())
-	api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(users.GetUserByID())
-	//[End: Users end points]
-
-	//[Start: Friends end points}
-	//api.GetFriendsUserIDHandler = operations.GetFriendsUserIDHandlerFunc(usersApi.GetFriends())
-	//api.PostFriendsUserIDFriendIDHandler = operations.PostFriendsUserIDFriendIDHandlerFunc(usersApi.MakeFriendRequest())
-	//api.PatchFriendsUserIDFriendIDHandler = operations.PatchFriendsUserIDFriendIDHandlerFunc(usersApi.AcceptFriendRequest())
-	//api.DeleteFriendsFriendshipIDHandler = operations.DeleteFriendsFriendshipIDHandlerFunc(usersApi.DeleteFriend())
-	//[End: Friends end points}
+	log.SetFlags(log.Ltime | log.Lshortfile)
+	users.InitDatabase(ConfigurationFlags.DatabaseHost, ConfigurationFlags.DatabasePort, ConfigurationFlags.DatabaseUser, ConfigurationFlags.DatabasePassword)
 
 	api.JSONConsumer = runtime.JSONConsumer()
 
 	api.JSONProducer = runtime.JSONProducer()
+	//[Start: Users end points]
+	api.PostUsersHandler = operations.PostUsersHandlerFunc(users.CreateUser())
+	api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(users.GetUserByID())
+	api.DeleteUsersUserIDHandler = operations.DeleteUsersUserIDHandlerFunc(users.DeleteUserByID())
+	api.PutUsersUserIDHandler = operations.PutUsersUserIDHandlerFunc(users.UpdateUserByID())
+	//[End: Users end points]
 
-	api.DeleteFriendsFriendshipIDHandler = operations.DeleteFriendsFriendshipIDHandlerFunc(func(params operations.DeleteFriendsFriendshipIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeleteFriendsFriendshipID has not yet been implemented")
-	})
-	api.DeleteUsersUserIDHandler = operations.DeleteUsersUserIDHandlerFunc(func(params operations.DeleteUsersUserIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .DeleteUsersUserID has not yet been implemented")
-	})
-	api.GetFriendsUserIDHandler = operations.GetFriendsUserIDHandlerFunc(func(params operations.GetFriendsUserIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetFriendsUserID has not yet been implemented")
-	})
-	//api.GetUsersUserIDHandler = operations.GetUsersUserIDHandlerFunc(func(params operations.GetUsersUserIDParams) middleware.Responder {
-	//	return middleware.NotImplemented("operation .GetUsersUserID has not yet been implemented")
-	//})
-	api.PatchFriendsUserIDFriendIDHandler = operations.PatchFriendsUserIDFriendIDHandlerFunc(func(params operations.PatchFriendsUserIDFriendIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PatchFriendsUserIDFriendID has not yet been implemented")
-	})
-	api.PostFriendsUserIDFriendIDHandler = operations.PostFriendsUserIDFriendIDHandlerFunc(func(params operations.PostFriendsUserIDFriendIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PostFriendsUserIDFriendID has not yet been implemented")
-	})
-	api.PostUsersHandler = operations.PostUsersHandlerFunc(func(params operations.PostUsersParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PostUsers has not yet been implemented")
-	})
-	api.PutUsersUserIDHandler = operations.PutUsersUserIDHandlerFunc(func(params operations.PutUsersUserIDParams) middleware.Responder {
-		return middleware.NotImplemented("operation .PutUsersUserID has not yet been implemented")
-	})
+	api.JSONConsumer = runtime.JSONConsumer()
+
+	api.JSONProducer = runtime.JSONProducer()
 
 	api.ServerShutdown = func() {}
 
