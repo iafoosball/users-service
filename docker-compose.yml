@@ -1,6 +1,7 @@
 version: '2'
 services:
   users-service:
+    container_name: users-service
     build: './'
     ports:
       - 9005:9005
@@ -14,9 +15,9 @@ services:
     ports:
       - 9006:8529
     environment:
-      - ARANGO_ROOT_PASSWORD=iafoosball@users for the win
+      - ARANGO_ROOT_PASSWORD=users-password
     volumes:
-      - var/lib/iafoosball/arango/user-data:/var/lib/arangodb3
+      - /var/lib/iafoosball/stag/arango/user-data:/var/lib/arangodb3
 
 networks: 
   default:

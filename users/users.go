@@ -34,13 +34,13 @@ func GetUserByID() func(params operations.GetUsersUserIDParams) middleware.Respo
 // CreateUser creates User document in ArangoDB and registers user in Kong
 func CreateUser() func(params operations.PostUsersParams) middleware.Responder {
 	return func(params operations.PostUsersParams) middleware.Responder {
-		meta, err := usersCol.CreateDocument(nil, &params.Body)
+		_, err := usersCol.CreateDocument(nil, &params.Body)
 		if err != nil {
 			log.Fatal(err)
 		}
 		kongClient().Consumers().Create(
 			&gokong.ConsumerRequest{
-				Username: meta.UserID,
+				Username: params.Body.Username,
 			},
 		)
 		return operations.NewPostUsersOK()
@@ -48,9 +48,9 @@ func CreateUser() func(params operations.PostUsersParams) middleware.Responder {
 }
 
 // UpdateUserByID updates user data with content's of payload parameter entries
-func UpdateUserByID() func(params operations.PutUsersUserID) middleware.Responder {
+func UpdateUserByID() func(params operations.PutUsersUserIDParams) middleware.Responder {
 	return func(params operations.PutUsersUserIDParams) middleware.Responder {
-		_, err := usersCol.UpdateDocument(nil, &params.UserID, &params.Body)
+		_, err := usersCol.UpdateDocument(nil, params.Body.UserID, &params.Body)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -61,7 +61,7 @@ func UpdateUserByID() func(params operations.PutUsersUserID) middleware.Responde
 // DeleteUserByID deletes user of specified identifier. Operation is irreversible
 func DeleteUserByID() func(params operations.DeleteUsersUserIDParams) middleware.Responder {
 	return func(params operations.DeleteUsersUserIDParams) middleware.Responder {
-		_, err := usersCol.DeleteUserByID(nil, &params.UserID)
+		_, err := usersCol.RemoveDocument(nil, params.UserID)
 		if err != nil {
 			log.Fatal(err)
 		}
