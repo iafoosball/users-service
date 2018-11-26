@@ -191,7 +191,7 @@ definitions:
         description: The image Uri of the user.
       usertype:
         type: string
-        description: What is this?
+        description: What is this? Probably permission stuff i.e admin user
       datetime:
         type: string
         description: The datetime when the user register.
