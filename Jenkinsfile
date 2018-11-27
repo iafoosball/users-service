@@ -22,7 +22,6 @@ pipeline {
     post {
         always {
             sh "docker-compose down -v --rmi 'all'"
-            sh "docker network rm kong_iafoosball"
         }
     }
 }
