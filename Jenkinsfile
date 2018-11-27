@@ -8,13 +8,11 @@ pipeline {
     stages {
         stage ("Build") {
             steps {
-                sh "docker network create -d bridge kong_iafoosball"
                 sh "docker-compose build --pull"
             }
         }
         stage ("Deploy") {
             steps {
-                sh "docker network create -d bridge kong_iafoosball"
                 sh "docker-compose up --force-recreate"
             }
         }
