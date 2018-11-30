@@ -3,15 +3,15 @@
 package restapi
 
 import (
-	"log"
 	"crypto/tls"
-	"github.com/go-openapi/swag"
-	"github.com/iafoosball/users-service/users"
-	"net/http"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
+	"github.com/iafoosball/auth-service/jwt/sdk"
 	"github.com/iafoosball/users-service/restapi/operations"
+	"github.com/iafoosball/users-service/users"
+	"log"
+	"net/http"
 )
 
 //go:generate swagger generate server --target .. --name users --spec ../users.yml
@@ -88,8 +88,17 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	// auth handler goes here:
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// get JWT from request
-		// validate it against auth-service
-		// next.ServeHTTP(w, r)
+		v := &sdk.JWTValidator{
+			Protocol:"http",
+			Hostname: "auth-service",
+			Port:8070,
+		}
+
+		authStr := r.Header.Get("Authorization")
+		if ok, err := v.ValidateAuth(authStr); ok && err != nil {
+			handler.ServeHTTP(w, r)
+		} else {
+			w.WriteHeader(401)
+		}
 	})
 }
