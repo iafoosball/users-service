@@ -162,7 +162,29 @@ definitions:
   User:
     type: object
     properties:
-      personData:
+      userID:
+        type: string
+        description: The unique user id given by the system.
+      username:
+        type: string
+        description: The username of the user.
+      mmr:
+        type: integer
+        description: Match making ranking.
+      level:
+        type: integer
+        description: The level of the user.
+      goals:
+        type: integer
+        description: Total goals of a user.
+      highestGoalspeed:
+        type: integer
+        description: Total goals of a user.
+      achievements:
+        type: array
+        items:
+          type: string
+      privateData:
         type: object
         properties:
           firstname:
@@ -195,31 +217,9 @@ definitions:
           creditCardPin:
             type: string
             description: The three digit card pin.
-      userID:
-        type: string
-        description: The unique user id given by the system.
-      mmr:
-        type: integer
-        description: Match making ranking.
-      level:
-        type: integer
-        description: The level of the user.
-      goals:
-        type: integer
-        description: Total goals of a user.
-      highestGoalspeed:
-        type: integer
-        description: Total goals of a user.
-      achievements:
-        type: array
-        items:
-          type: string
-      settings:
+      protectedData:
         type: object
         properties:
-          username:
-            type: string
-            description: The username of the user.
           color:
             type: string
             description: The primary color of the user.
