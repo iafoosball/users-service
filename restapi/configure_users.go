@@ -88,7 +88,7 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	// auth handler goes here:
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		v := &sdk.JWTValidator{
+		v := &sdk.JWTValidator {
 			Protocol:"http",
 			Hostname: "auth-service",
 			Port:8070,
@@ -98,6 +98,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 		if ok, err := v.ValidateAuth(authStr); ok && err != nil {
 			handler.ServeHTTP(w, r)
 		} else {
+			w.Write([]byte(err.Error()))
 			w.WriteHeader(401)
 		}
 	})

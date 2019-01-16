@@ -4,7 +4,7 @@ services:
     container_name: users-service
     build: './'
     ports:
-      - 9005:9005
+      - 9005:4444
     depends_on:
       - arangodb  
     links:
@@ -16,8 +16,9 @@ services:
       - 9006:8529
     environment:
       - ARANGO_ROOT_PASSWORD=users-password
+      - REDIS_ADDR=redis:6379
     volumes:
-      - /var/lib/iafoosball/stag/arango/user-data:/var/lib/arangodb3
+      - $HOME/iafoosball/stag/arango/user-data:/var/lib/arangodb3
 
 networks: 
   default:
