@@ -19,7 +19,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5eecc353d069048d0a40df54d3a49f6728afd2837bfa365e1513cad9e3d6a6d3"
+  digest = "1:e5c1e47539c0c4126ae7f90052ccd0c0c7459c1f8dbc2f7afef1b5e144da2d7b"
   name = "github.com/arangodb/go-driver"
   packages = [
     ".",
@@ -28,7 +28,7 @@
     "util",
   ]
   pruneopts = "UT"
-  revision = "88874b717ad9582bb274e06a2ff75428fe66c7cc"
+  revision = "890f78e3edcc13ba902bdb87a9af31115bd717ae"
 
 [[projects]]
   branch = "master"
@@ -71,18 +71,18 @@
     "internal/json",
   ]
   pruneopts = "UT"
-  revision = "1ca0a4f7cbcbe61c005d1bd43fdd8bb8b71df6bc"
+  revision = "eeefdecb41b842af6dc652aaea4026e8403e62df"
 
 [[projects]]
-  digest = "1:c49164b7b1e34324258ae61deef2cba7912005ba9cb7a9ee4930fe6bdfec7b5d"
+  digest = "1:8c4be86399428a81749056c2d67feba95c1784b742ccf03ac7527d0b426bf22a"
   name = "github.com/go-openapi/analysis"
   packages = [
     ".",
     "internal",
   ]
   pruneopts = "UT"
-  revision = "c701774f4e604d952e4e8c56dee260be696e33c3"
-  version = "v0.17.0"
+  revision = "e2f3fdbb7ed0e56e070ccbfb6fc75b288a33c014"
+  version = "v0.18.0"
 
 [[projects]]
   digest = "1:ac4b35a4bba11edb2110fca0707bae03ae92fbd8222e6b483465d98efaabfb97"
@@ -90,7 +90,7 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "d9664f9fab8994271e573ed69cf2adfc09b7a800"
-  version = "v0.17.0"
+  version = "v0.17.2"
 
 [[projects]]
   digest = "1:953a2628e4c5c72856b53f5470ed5e071c55eccf943d798d42908102af2a610f"
@@ -98,7 +98,7 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "ef5f0afec364d3b9396b7b77b43dbe26bf1f8004"
-  version = "v0.17.0"
+  version = "v0.18.0"
 
 [[projects]]
   digest = "1:81210e0af657a0fb3638932ec68e645236bceefa4c839823db0c4d918f080895"
@@ -106,7 +106,7 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "8483a886a90412cd6858df4ea3483dce9c8e35a3"
-  version = "v0.17.0"
+  version = "v0.18.0"
 
 [[projects]]
   digest = "1:a20e8bf0e58e2010677432ffbe5533c1e83bdf368ba5b057f3e00e2071ca8b09"
@@ -114,7 +114,7 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "150d36912387ec2f607be674c5be309ddccc0eed"
-  version = "v0.17.0"
+  version = "v0.17.2"
 
 [[projects]]
   digest = "1:a775057cc1f2ab11da5dc5324f4a5932c14f64e402fa5a48f1b96b5f4c9b579f"
@@ -131,7 +131,7 @@
   ]
   pruneopts = "UT"
   revision = "231d7876b7019dbcbfc97a7ba764379497b67c1d"
-  version = "v0.17.0"
+  version = "v0.17.2"
 
 [[projects]]
   digest = "1:394fed5c0425fe01da3a34078adaa1682e4deaea6e5d232dde25c4034004c151"
@@ -139,15 +139,15 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "5bae59e25b21498baea7f9d46e9c147ec106a42e"
-  version = "v0.17.0"
+  version = "v0.17.2"
 
 [[projects]]
-  digest = "1:a4235bc1ae951c708bbf46cee7874ebb88e664614a98a7403fb115bb400c231c"
+  digest = "1:ffa79f4705a3a85f2412d2d163c37acdf60d128c679e641c323a5de712e23d27"
   name = "github.com/go-openapi/strfmt"
   packages = ["."]
   pruneopts = "UT"
-  revision = "35fe47352985e13cc75f13120d70d26fd764ed51"
-  version = "v0.17.0"
+  revision = "edab9990ffc9b4a428f3306ecf4d18a069ca3317"
+  version = "v0.17.2"
 
 [[projects]]
   digest = "1:32f3d2e7f343de7263c550d696fb8a64d3c49d8df16b1ddfc8e80e1e4b3233ce"
@@ -155,7 +155,7 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "5899d5c5e619fda5fa86e14795a835f473ca284c"
-  version = "v0.17.0"
+  version = "v0.17.2"
 
 [[projects]]
   digest = "1:58541fddf3f4ec485710f1b346e7f647baf09a878a604e47e3668c600fe44076"
@@ -163,7 +163,7 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "d2eab7d93009e9215fc85b2faa2c2f2a98c2af48"
-  version = "v0.17.0"
+  version = "v0.18.0"
 
 [[projects]]
   digest = "1:38ec74012390146c45af1f92d46e5382b50531247929ff3a685d2b2be65155ac"
@@ -194,17 +194,24 @@
 
 [[projects]]
   branch = "develop"
-  digest = "1:8b2d2447e377c8b352eac5741de106c4012e0e00fa65661520ccd26e533d254c"
+  digest = "1:e4bb43657c50188d83151cba1c9f2f47b2940dadae055384097baa0d0509a576"
   name = "github.com/iafoosball/auth-service"
   packages = [
     "jwt",
-    "jwt/sdk",
     "rand",
     "redis",
     "rs256",
   ]
   pruneopts = "UT"
-  revision = "e785f9f9e4510820bd0204010ddc6c0dfbad1dc7"
+  revision = "920ea2d0c2bb14807814f70bd07802ff904985ed"
+
+[[projects]]
+  branch = "master"
+  digest = "1:c2fd62d7ae8d9bc457b267bec62532b5935d08085b384ccbf414b10d16c0b455"
+  name = "github.com/iafoosball/middleware"
+  packages = ["authorization"]
+  pruneopts = "UT"
+  revision = "b33ece53d5145c6cc0f4b123baa1eb987dfedfd0"
 
 [[projects]]
   digest = "1:a2cff208d4759f6ba1b1cd228587b0a1869f95f22542ec9cd17fff64430113c7"
@@ -243,7 +250,7 @@
     "netutil",
   ]
   pruneopts = "UT"
-  revision = "146acd28ed5894421fb5aac80ca93bc1b1f46f87"
+  revision = "915654e7eabcea33ae277abbecf52f0d8b7a9fdc"
 
 [[projects]]
   digest = "1:0c56024909189aee3364b7f21a95a27459f718aa7c199a5c111c36cfffd9eaef"
@@ -270,12 +277,12 @@
   version = "v0.3.0"
 
 [[projects]]
-  digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
+  digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   pruneopts = "UT"
-  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
-  version = "v2.2.1"
+  revision = "51d6538a90f86fe93ac480b35f37b2be17fef232"
+  version = "v2.2.2"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -292,7 +299,7 @@
     "github.com/go-openapi/spec",
     "github.com/go-openapi/strfmt",
     "github.com/go-openapi/swag",
-    "github.com/iafoosball/auth-service/jwt/sdk",
+    "github.com/iafoosball/middleware/authorization",
     "github.com/jessevdk/go-flags",
     "golang.org/x/net/netutil",
   ]

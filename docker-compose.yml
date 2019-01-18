@@ -16,9 +16,8 @@ services:
       - 9006:8529
     environment:
       - ARANGO_ROOT_PASSWORD=users-password
-      - REDIS_ADDR=redis:6379
     volumes:
-      - $HOME/iafoosball/stag/arango/user-data:/var/lib/arangodb3
+      - /var/lib/iafoosball/stag/arango/user-data:/var/lib/arangodb3
 
 networks: 
   default:
