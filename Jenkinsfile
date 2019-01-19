@@ -13,7 +13,6 @@ pipeline {
     }
     post {
         always {
-            sh "docker-compose down --rmi='all'"
             sh "docker system prune -f"
         }
         failure {
