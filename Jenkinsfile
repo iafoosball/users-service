@@ -1,24 +1,27 @@
 pipeline {
-
     agent any
-    environment {
-        COMPOSE_PROJECT_NAME = "${env.JOB_NAME}-${env.BUILD_ID}"
-        COMPOSE_FILE = "docker-compose.yml"
-    }
     stages {
-        stage ("Build") {
+        stage ('Prepare stag env') {
             steps {
-                sh "docker-compose build --pull"
+                sh "./delete-kong.sh"
+                sh "docker rm -f users-service users-arangodb"
             }
         }
-        stage ("Deploy") {
+        stage('Build') {
+            steps {
+                sh "docker-compose build"
+            }
+        }
+        stage ('Deploy') {
             steps {
                 sh "docker-compose up -d --force-recreate"
+                sh "./create-kong.sh"
             }
         }
     }
     post {
         always {
+            sh "docker-compose down --rmi='all'"
             sh "docker system prune -f"
         }
     }
