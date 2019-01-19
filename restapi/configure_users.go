@@ -92,7 +92,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 		v := &auth.JWTValidator {
 			Protocol:"http",
 			Hostname: "auth-service",
-			Port:8070,
+			Port:8010,
 		}
 
 		authStr := r.Header.Get("Authorization")

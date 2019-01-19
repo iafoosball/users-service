@@ -36,4 +36,4 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w" -a -installsuffix cgo -o 
 #
 ## Copy our static executable
 #COPY --from=builder /go/src/github.com/iafoosball/users-service/cmd/users-server/users-service .
-CMD ["./users-service","--port","4444","--host","0.0.0.0"]
+CMD ["./users-service","--port","8020","--host","0.0.0.0"]

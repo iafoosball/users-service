@@ -2,10 +2,11 @@
 # This file should be used only outside the running container (on host).
 
 API=users
-SERVICE_ADDR=$API-service:8070
+API_PORT=8020
+SERVICE_ADDR=$API-service:$API_PORT
 
 ADMIN_HOSTNAME=localhost
-ADMIN_PORT=8050
+ADMIN_PORT=8051
 ADMIN_ADDR=$ADMIN_HOSTNAME:$ADMIN_PORT
 
 # Get route id on Service
