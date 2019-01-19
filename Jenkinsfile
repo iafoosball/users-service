@@ -13,13 +13,13 @@ pipeline {
         }
         stage ("Deploy") {
             steps {
-                sh "docker-compose up --force-recreate"
+                sh "docker-compose up -d --force-recreate"
             }
         }
     }
     post {
         always {
-            sh "docker-compose down -v --rmi 'all'"
+            sh "docker system prune -f"
         }
     }
 }

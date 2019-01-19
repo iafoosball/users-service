@@ -4,7 +4,7 @@ services:
     container_name: users-service
     build: './'
     ports:
-      - 9005:9005
+      - 9005:4444
     depends_on:
       - arangodb  
     links:
