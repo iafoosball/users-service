@@ -44,6 +44,7 @@ func UpdateUserByID() func(params operations.PutUsersUserIDParams) middleware.Re
 func DeleteUserByID() func(params operations.DeleteUsersUserIDParams) middleware.Responder {
 	return func(params operations.DeleteUsersUserIDParams) middleware.Responder {
 		_, err := usersCol.RemoveDocument(nil, params.UserID)
+
 		if err != nil {
 			log.Fatal(err)
 		}

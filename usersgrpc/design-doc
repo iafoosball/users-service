@@ -1,0 +1,7 @@
+Users-service:
+- imaginary project structure:
+userspb (protobuf stuff)
+server (Go)
+client (Go and Dart)
+redis ()
+docker-compose.yml (for redis and the service)

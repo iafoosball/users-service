@@ -1,0 +1,25 @@
+syntax = "proto3";
+package userspb;
+
+message User {
+    string userhash = 1;
+    string nickname = 2;
+    int32 mmr = 3;
+    int32 winrate = 4;
+    int32 totalgoals = 5;
+    repeated string achievements = 6;
+}
+
+// UI can Query Data from Redis datastore (Read model).
+// UI only queries a user per userhash
+service UsersService {
+    rpc ReadOne(ReadOneRequest) returns (ReadOneResponse) {};
+}
+
+message ReadOneRequest {
+    string userhash = 1;
+}
+
+message ReadOneResponse {
+    User user = 1;
+}

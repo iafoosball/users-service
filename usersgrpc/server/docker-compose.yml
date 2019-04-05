@@ -1,0 +1,34 @@
+version: '3'
+services:
+#  auth-service:
+#    container_name: users-service
+#    build:
+#      context: ..
+#      dockerfile: Dockerfile
+#    links:
+#      - redis
+#    depends_on:
+#      - redis
+#    ports:
+#      - "8010:8010/tcp"
+#    environment:
+#      REDIS_ADDR: "redis:6379"
+#      SERVICE_ADDR: "0.0.0.0:8010"
+#    restart: on-failure
+  redis:
+    container_name: users-redis
+    image: redis:5.0.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "8011:6379/tcp"
+      - 6379
+    volumes:
+      - /var/lib/iafoosball/stag/redis/users-data:/var/lib/redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "PING"]
+      interval: 2m
+      timeout: 10s
+      retries: 3
+    environment:
+      REDIS_ADDR: "localhost:6379"
+    restart: on-failure

@@ -1,37 +1,15 @@
-package usersgrpc
+package main
 
 import (
-	fmt "fmt"
-	"log"
-	"net"
-
-	grpc "google.golang.org/grpc"
+	"fmt"
+	"github.com/iafoosball/users-service/usersgrpc/server/redis"
 )
 
 func main() {
-	//flag.Parse() // parse our flags
-
-	// initialize arango DB with cols
-	db := &ArangoDB{
-		Host: "arangodb",
-		Port: 8529,
-		User: "root",
-		Password: "users-password",
+	d, e := redis.HGET("chuj", "SIZE")
+	if e != nil {
+		fmt.Print("%v", e.Error())
 	}
 
-	db.InitDatabase()
-	// initialize grpc service
-	serv := &usersServiceServer{
-		usersCol: db.col(usersColName),
-	}
-
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", db.Port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	grpcServer := grpc.NewServer()
-	RegisterUsersServiceServer(grpcServer, serv)
-
-	// determine whether to use TLS
-	grpcServer.Serve(lis)
+	fmt.Printf("I was here %v", d)
 }
